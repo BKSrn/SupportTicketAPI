@@ -4,12 +4,10 @@ import SupportTicketAPI.SupportTicketAPI.dto.ChamadoRequestDTO;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity(name = "CHAMADO")
-@Table(name = "CHAMADOS")
-@Data
+@Entity
+@Table(name = "chamados")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Chamado {
@@ -18,24 +16,77 @@ public class Chamado {
     private Long id;
     private String titulo;
     private String descricao;
-    private String categoria; //Sistema - Rede - Hardware - Software - Acesso - Email - Impressora - Banco de Dados - Servidor - Outros
-    private String prioridade; //Baixa - Media - Alta
-    private String status; //Em aberto - Em andamento - Finalizado
+    @Enumerated(EnumType.STRING)
+    private Categoria categoria;
+    @Enumerated(EnumType.STRING)
+    private Prioridade prioridade;
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     public Chamado(ChamadoRequestDTO chamadoRequestDTO) {
         this.titulo = chamadoRequestDTO.getTitulo();
         this.descricao = chamadoRequestDTO.getDescricao();
-        this.categoria = chamadoRequestDTO.getCategoria();
-        this.prioridade = chamadoRequestDTO.getPrioridade();
-        this.status = chamadoRequestDTO.getStatus();
+
+        this.categoria = Categoria.fromString(chamadoRequestDTO.getCategoria());
+        this.prioridade = Prioridade.fromString(chamadoRequestDTO.getPrioridade());
+        this.status = Status.fromString(chamadoRequestDTO.getStatus());
     }
 
     public Chamado(Long id, @Valid ChamadoRequestDTO chamadoRequestDTO) {
         this.id = id;
         this.titulo = chamadoRequestDTO.getTitulo();
         this.descricao = chamadoRequestDTO.getDescricao();
-        this.categoria = chamadoRequestDTO.getCategoria();
-        this.prioridade = chamadoRequestDTO.getPrioridade();
-        this.status = chamadoRequestDTO.getStatus();
+
+        this.categoria = Categoria.fromString(chamadoRequestDTO.getCategoria());
+        this.prioridade = Prioridade.fromString(chamadoRequestDTO.getPrioridade());
+        this.status = Status.fromString(chamadoRequestDTO.getStatus());
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public Prioridade getPrioridade() {
+        return prioridade;
+    }
+
+    public void setPrioridade(Prioridade prioridade) {
+        this.prioridade = prioridade;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }
