@@ -27,8 +27,8 @@ public class ChamadoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ChamadoDTO>> findAll(@RequestParam(value = "titulo", required = false) String titulo) {
-        return ResponseEntity.ok(chamadoService.findAll(titulo));
+    public ResponseEntity<List<ChamadoDTO>> findAll() {
+        return ResponseEntity.ok(chamadoService.findAll());
     }
 
     @DeleteMapping("/{id}")

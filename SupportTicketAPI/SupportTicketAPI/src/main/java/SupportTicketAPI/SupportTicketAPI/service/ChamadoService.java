@@ -28,7 +28,7 @@ public class ChamadoService {
         return ResponseEntity.created(uri).body(chamadoDTO);
     }
 
-    public List<ChamadoDTO> findAll(String titulo){
+    public List<ChamadoDTO> findAll(){
         List<Chamado> chamados = chamadoRepository.findAll();
 
         return converterListParaDTO(chamados);
